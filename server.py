@@ -27,21 +27,21 @@ XML_GEOFF_TEMPLATE = """\
 
 @get("/")
 def get_index():
-    return redirect("/neotool/xml-geoff/")
+    return redirect("/xml-geoff/")
 
 
-@get("/neotool/xml-geoff")
-def get_neotool_xml_geoff_no_slash():
-    return redirect("/neotool/xml-geoff/")
+@get("/xml-geoff")
+def get_xml_geoff_no_slash():
+    return redirect("/xml-geoff/")
 
 
-@get("/neotool/xml-geoff/")
-def get_neotool_xml_geoff():
+@get("/xml-geoff/")
+def get_xml_geoff():
     return template(XML_GEOFF_TEMPLATE)
 
 
-@post("/neotool/xml-geoff/")
-def post_neotool_xml_geoff():
+@post("/xml-geoff/")
+def post_xml_geoff():
     xml = request.POST.get("xml")
     if xml is None:
         xml = request.body.read()
@@ -56,5 +56,5 @@ def post_neotool_xml_geoff():
 
 
 if __name__ == "__main__":
-    run(host="0.0.0.0", port=9120)
+    run(port=9120)
 
