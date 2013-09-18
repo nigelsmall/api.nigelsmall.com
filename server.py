@@ -7,6 +7,20 @@ from bottle import get, post, run, request, response, template, abort, redirect
 from py2neo import geoff
 
 
+INDEX_TEMPLATE = """\
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+<h1>Services</h1>
+<ul>
+<li><a href="/xml-geoff">XML to Geoff Converter</a></li>
+</ul>
+</body>
+</html>
+"""
+
 XML_GEOFF_TEMPLATE = """\
 <!doctype html>
 <html>
@@ -57,7 +71,7 @@ curl -X POST http://api.nigelsmall.com/xml-geoff -d @test/files/abba.xml
 
 @get("/")
 def get_index():
-    return redirect("/xml-geoff")
+    return template(INDEX_TEMPLATE)
 
 
 @get("/xml-geoff")
