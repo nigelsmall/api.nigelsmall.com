@@ -56,5 +56,5 @@ def post_neotool_xml_geoff():
 
 
 if __name__ == "__main__":
-    run(port=9120)
+    run(host="0.0.0.0", port=9120)
 
