@@ -63,6 +63,7 @@ curl -X POST http://api.nigelsmall.com/xml-geoff -d @test/files/abba.xml
 </textarea>
 <br>
 <input type="submit" value="Convert to Geoff">
+<p>See also the <a href="/xml-cypher">XML to Cypher Converter</a>.</p>
 </form>
 </body>
 </html>
@@ -110,6 +111,7 @@ curl -X POST http://api.nigelsmall.com/xml-cypher -d @test/files/abba.xml
 </textarea>
 <br>
 <input type="submit" value="Convert to Cypher CREATE statement">
+<p>See also the <a href="/xml-geoff">XML to Geoff Converter</a>.</p>
 </form>
 </body>
 </html>
