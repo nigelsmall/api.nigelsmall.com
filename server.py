@@ -86,7 +86,7 @@ def post_xml_geoff():
         xml = request.body.read()
     if xml:
         try:
-            subgraph = geoff.Subgraph.load_xml(StringIO(xml.decode("utf-8")))
+            subgraph = geoff.Subgraph.load_xml(StringIO(xml.decode("utf-8").strip()))
             response.set_header("Content-Type", "text/plain; charset=UTF-8")
             return subgraph._source
         except:
