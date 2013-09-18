@@ -10,6 +10,17 @@ INDEX_TEMPLATE = """\
 <!doctype html>
 <html>
 <head>
+<title>Nigel's Web Services</title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25485551-11', 'nigelsmall.com');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
 <h1>Services</h1>
@@ -26,6 +37,16 @@ XML_GEOFF_TEMPLATE = """\
 <html>
 <head>
 <title>XML to Geoff Converter</title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25485551-11', 'nigelsmall.com');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
 <form method="POST">
@@ -74,6 +95,16 @@ XML_CYPHER_TEMPLATE = """\
 <html>
 <head>
 <title>XML to Cypher Converter</title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25485551-11', 'nigelsmall.com');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
 <form method="POST">
