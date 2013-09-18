@@ -20,7 +20,7 @@ XML_GEOFF_TEMPLATE = """\
 <h2>Use as a web service</h2>
 To use this API from the command line, use <tt>curl</tt> as below:
 <pre>
-curl -X POST http://api.nigelsmall.com/xml-geoff/ -d @test/files/abba.xml
+curl -X POST http://api.nigelsmall.com/xml-geoff -d @test/files/abba.xml
 </pre>
 <h2>Try on this page</h2>
 <textarea name="xml" cols="80" rows="24" wrap="off"><?xml version="1.0" encoding="UTF-8" ?>
@@ -57,20 +57,15 @@ curl -X POST http://api.nigelsmall.com/xml-geoff/ -d @test/files/abba.xml
 
 @get("/")
 def get_index():
-    return redirect("/xml-geoff/")
+    return redirect("/xml-geoff")
 
 
 @get("/xml-geoff")
-def get_xml_geoff_no_slash():
-    return redirect("/xml-geoff/")
-
-
-@get("/xml-geoff/")
 def get_xml_geoff():
     return template(XML_GEOFF_TEMPLATE)
 
 
-@post("/xml-geoff/")
+@post("/xml-geoff")
 def post_xml_geoff():
     xml = request.POST.get("xml")
     if xml is None:
