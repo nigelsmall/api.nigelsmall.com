@@ -26,12 +26,11 @@ def get_xml_cypher():
 
 
 def _convert(method):
-    body = request.data.decode("utf-8")
-    if body.startswith("<"):
-        xml = body
+    a = request.accept_mimetypes.best_match(["application/json", "text/html"])
+    if a == "application/json":
+        xml = request.data.decode("utf-8")
     else:
-        values = url_decode(body)
-        xml = values["xml"]
+        xml = request.form["xml"]
     if xml:
         try:
             content = method(xml.strip().encode("utf-8"))
