@@ -3,6 +3,7 @@
 
 
 from flask import Flask, render_template, request, abort, make_response
+from werkzeug.urls import url_decode
 from py2neo.xmlutil import xml_to_cypher, xml_to_geoff
 
 
@@ -25,9 +26,12 @@ def get_xml_cypher():
 
 
 def _convert(method):
-    xml = request.form.get("xml")
-    if xml is None:
-        xml = request.data.encode("utf-8")
+    body = request.data.decode("utf-8")
+    if body.startswith("<"):
+        xml = body
+    else:
+        values = url_decode(body)
+        xml = values["xml"]
     if xml:
         try:
             content = method(xml.strip().encode("utf-8"))
@@ -36,6 +40,7 @@ def _convert(method):
             }
             return make_response((content, 200, headers))
         except:
+            raise
             abort(400)
     return make_response(("", 204, {}))
 
