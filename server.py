@@ -28,7 +28,7 @@ def get_xml_cypher():
 def _convert(method):
     a = request.accept_mimetypes.best_match(["application/json", "text/html"])
     if a == "application/json":
-        xml = request.data.decode("utf-8")
+        xml = request.get_data().decode("utf-8")
     else:
         xml = request.form["xml"]
     if xml:
@@ -39,7 +39,6 @@ def _convert(method):
             }
             return make_response((content, 200, headers))
         except:
-            raise
             abort(400)
     return make_response(("", 204, {}))
 
@@ -55,5 +54,5 @@ def post_xml_cypher():
 
 
 if __name__ == "__main__":
-    application.run(port=9120, debug=True)
+    application.run(port=9120)
 
