@@ -2,196 +2,54 @@
 # -*- coding: utf-8 -*-
 
 
-from bottle import get, post, run, request, response, template, abort
+from flask import Flask, render_template, request, abort, make_response
 from py2neo.xmlutil import xml_to_cypher, xml_to_geoff
 
 
-INDEX_TEMPLATE = """\
-<!doctype html>
-<html>
-<head>
-<title>Nigel's Web Services</title>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-25485551-11', 'nigelsmall.com');
-  ga('send', 'pageview');
-
-</script>
-</head>
-<body>
-<h1>Services</h1>
-<ul>
-<li><a href="/xml-cypher">XML to Cypher Converter</a></li>
-<li><a href="/xml-geoff">XML to Geoff Converter</a></li>
-</ul>
-</body>
-</html>
-"""
-
-XML_GEOFF_TEMPLATE = """\
-<!doctype html>
-<html>
-<head>
-<title>XML to Geoff Converter</title>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-25485551-11', 'nigelsmall.com');
-  ga('send', 'pageview');
-
-</script>
-</head>
-<body>
-<form method="POST">
-<h1>XML to Geoff Converter</h1>
-<p>This service allows conversion of generic XML data into Geoff, which can then be loaded into Neo4j.</p>
-<h2>Use as a web service</h2>
-To use this API from the command line, use <tt>curl</tt> as below:
-<pre>
-curl -X POST http://api.nigelsmall.com/xml-geoff -d @test/files/abba.xml
-</pre>
-<h2>Try on this page</h2>
-<textarea name="xml" cols="80" rows="24" wrap="off"><?xml version="1.0" encoding="UTF-8" ?>
-<group id="abba">
-  <member id="agnetha">
-    <name>Agnetha Fältskog</name>
-    <birth date="1950-04-05" />
-  </member>
-  <member id="björn">
-    <name>Björn Ulvaeus</name>
-    <birth date="1945-04-25" />
-  </member>
-  <member id="benny">
-    <name>Benny Andersson</name>
-    <birth date="1946-12-16" />
-  </member>
-  <member id="frida">
-    <name>Anni-Frid Lyngstad</name>
-    <birth date="1945-11-15" />
-  </member>
-  <song id="waterloo" release_date="1974-03-04">
-    <name>Waterloo</name>
-    <length min="2" sec="42" />
-  </song>
-</group>
-</textarea>
-<br>
-<input type="submit" value="Convert to Geoff">
-<p>See also the <a href="/xml-cypher">XML to Cypher Converter</a>.</p>
-</form>
-</body>
-</html>
-"""
-
-XML_CYPHER_TEMPLATE = """\
-<!doctype html>
-<html>
-<head>
-<title>XML to Cypher Converter</title>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-25485551-11', 'nigelsmall.com');
-  ga('send', 'pageview');
-
-</script>
-</head>
-<body>
-<form method="POST">
-<h1>XML to Cypher Converter</h1>
-<p>This service allows conversion of generic XML data into a Cypher CREATE statement, which can then be loaded into Neo4j.</p>
-<h2>Use as a web service</h2>
-To use this API from the command line, use <tt>curl</tt> as below:
-<pre>
-curl -X POST http://api.nigelsmall.com/xml-cypher -d @test/files/abba.xml
-</pre>
-<h2>Try on this page</h2>
-<textarea name="xml" cols="80" rows="24" wrap="off"><?xml version="1.0" encoding="UTF-8" ?>
-<group id="abba">
-  <member id="agnetha">
-    <name>Agnetha Fältskog</name>
-    <birth date="1950-04-05" />
-  </member>
-  <member id="björn">
-    <name>Björn Ulvaeus</name>
-    <birth date="1945-04-25" />
-  </member>
-  <member id="benny">
-    <name>Benny Andersson</name>
-    <birth date="1946-12-16" />
-  </member>
-  <member id="frida">
-    <name>Anni-Frid Lyngstad</name>
-    <birth date="1945-11-15" />
-  </member>
-  <song id="waterloo" release_date="1974-03-04">
-    <name>Waterloo</name>
-    <length min="2" sec="42" />
-  </song>
-</group>
-</textarea>
-<br>
-<input type="submit" value="Convert to Cypher CREATE statement">
-<p>See also the <a href="/xml-geoff">XML to Geoff Converter</a>.</p>
-</form>
-</body>
-</html>
-"""
+application = Flask(__name__)
 
 
-@get("/")
+@application.route("/")
 def get_index():
-    return template(INDEX_TEMPLATE)
+    return render_template("index.html")
 
 
-@get("/xml-geoff")
+@application.route("/xml-geoff")
 def get_xml_geoff():
-    return template(XML_GEOFF_TEMPLATE)
+    return render_template("neotool_xml.html", format_title="Geoff", format_description="Geoff interchange file", neotool_command="xml-geoff", see_also={"/xml-cypher": "XML to Cypher converter"})
 
 
-@get("/xml-cypher")
+@application.route("/xml-cypher")
 def get_xml_cypher():
-    return template(XML_CYPHER_TEMPLATE)
+    return render_template("neotool_xml.html", format_title="Cypher", format_description="Cypher CREATE statement", neotool_command="xml-cypher", see_also={"/xml-geoff": "XML to Geoff converter"})
 
 
-@post("/xml-geoff")
+def _convert(method):
+    xml = request.form.get("xml")
+    if xml is None:
+        xml = request.data.encode("utf-8")
+    if xml:
+        try:
+            content = method(xml.strip().encode("utf-8"))
+            headers = {
+                "Content-Type": "text/plain; charset=UTF-8",
+            }
+            return make_response((content, 200, headers))
+        except:
+            abort(400)
+    return make_response(("", 204, {}))
+
+
+@application.route("/xml-geoff", methods=["POST"])
 def post_xml_geoff():
-    xml = request.POST.get("xml")
-    if xml is None:
-        xml = request.body.read()
-    if xml:
-        try:
-            response.set_header("Content-Type", "text/plain; charset=UTF-8")
-            return xml_to_geoff(xml.strip())
-        except:
-            abort(400)
-    return None
+    return _convert(xml_to_geoff)
 
 
-@post("/xml-cypher")
+@application.route("/xml-cypher", methods=["POST"])
 def post_xml_cypher():
-    xml = request.POST.get("xml")
-    if xml is None:
-        xml = request.body.read()
-    if xml:
-        try:
-            response.set_header("Content-Type", "text/plain; charset=UTF-8")
-            return xml_to_cypher(xml.strip())
-        except:
-            abort(400)
-    return None
+    return _convert(xml_to_cypher)
 
 
 if __name__ == "__main__":
-    run(port=9120)
+    application.run(port=9120, debug=True)
 

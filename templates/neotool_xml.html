@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<title>XML to {{format_title}} Converter</title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25485551-11', 'nigelsmall.com');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+<form method="POST">
+<h1>XML to {{format_title}} Converter</h1>
+<p>This service allows conversion of generic XML data into a {{format_description}}, which can then be loaded into Neo4j.</p>
+<h2>Use as a web service</h2>
+To use this API from the command line, use <tt>curl</tt> as below:
+<pre>
+curl -X POST http://api.nigelsmall.com/{{neotool_command}} -d @test/files/abba.xml
+</pre>
+<h2>Try on this page</h2>
+<textarea name="xml" cols="80" rows="24" wrap="off"><?xml version="1.0" encoding="UTF-8" ?>
+<group id="abba">
+  <member id="agnetha">
+    <name>Agnetha Fältskog</name>
+    <birth date="1950-04-05" />
+  </member>
+  <member id="björn">
+    <name>Björn Ulvaeus</name>
+    <birth date="1945-04-25" />
+  </member>
+  <member id="benny">
+    <name>Benny Andersson</name>
+    <birth date="1946-12-16" />
+  </member>
+  <member id="frida">
+    <name>Anni-Frid Lyngstad</name>
+    <birth date="1945-11-15" />
+  </member>
+  <song id="waterloo" release_date="1974-03-04">
+    <name>Waterloo</name>
+    <length min="2" sec="42" />
+  </song>
+</group>
+</textarea>
+<br>
+<input type="submit" value="Convert to {{format_description}}">
+<h2>See also</h2>
+<ul>
+{% for href, text in see_also.items() %}
+<li><a href="{{href}}">{{text}}</a></li>
+{% endfor %}
+</ul>
+</form>
+</body>
+</html>
