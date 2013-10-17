@@ -2,28 +2,54 @@
 <html>
 <head>
 <title>XML to {{format_title}} Converter</title>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-25485551-11', 'nigelsmall.com');
-  ga('send', 'pageview');
-
-</script>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="stylesheet" href="http://nigelsmall.com/css/terminal.css" />
+    <style>
+    textarea {
+      background: rgba(0, 0, 0, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px;
+      font-size: 14px;
+      /*color: #b5e853;*/
+      color: white;
+      border-radius: 2px;
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      text-wrap: normal;
+      overflow: auto;
+      overflow-y: hidden;
+      width: 698px;
+    }
+    input[type=submit] {
+        padding: .5em 1em;
+    }
+    </style
 </head>
 <body>
-<form method="POST">
-<h1>XML to {{format_title}} Converter</h1>
-<p>This service allows conversion of generic XML data into a {{format_description}}, which can then be loaded into Neo4j.</p>
-<h2>Use as a web service</h2>
-To use this API from the command line, use <tt>curl</tt> as below:
-<pre>
-curl -X POST http://api.nigelsmall.com/{{neotool_command}} -d @test/files/abba.xml
-</pre>
-<h2>Try on this page</h2>
-<textarea name="xml" cols="80" rows="24" wrap="off"><?xml version="1.0" encoding="UTF-8" ?>
+
+    <header>
+      <div class="container">
+        <h1><a href="/">Nigel Small</a></h1>
+        <h2>Open Sorcery</h2>
+        <div class="contact">
+          <a href="https://github.com/nigelsmall"><img src="http://nigelsmall.com/img/github_mark.png"></a>
+          <a href="https://twitter.com/technige"><img src="http://nigelsmall.com/img/twitter_mark.png"></a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+
+        <form method="POST">
+        <h2>XML to {{format_title}} Converter</h2>
+        <p>This web service allows conversion of generic XML data into a {{format_description}}, which can then be loaded into Neo4j.</p>
+        <h3>Programmatic Usage</h3>
+        To use this API from the command line, use <tt>curl</tt> as below:
+        <pre>curl -X POST http://api.nigelsmall.com/{{neotool_command}} -d @test/files/abba.xml</pre>
+        <h3>Demonstration</h3>
+        <textarea name="xml" rows="24" wrap="off"><?xml version="1.0" encoding="UTF-8" ?>
 <group id="abba">
   <member id="agnetha">
     <name>Agnetha Fältskog</name>
@@ -46,15 +72,32 @@ curl -X POST http://api.nigelsmall.com/{{neotool_command}} -d @test/files/abba.x
     <length min="2" sec="42" />
   </song>
 </group>
-</textarea>
-<br>
-<input type="submit" value="Convert to {{format_description}}">
-<h2>See also</h2>
-<ul>
-{% for href, text in see_also.items() %}
-<li><a href="{{href}}">{{text}}</a></li>
-{% endfor %}
-</ul>
-</form>
+        </textarea>
+        <div style="text-align:right;margin:.75em 0;">
+        <input type="submit" value="Convert to {{format_description}}">
+        </div>
+        <br><hr><br>
+        <h3>See also</h3>
+        <ul>
+        {% for href, text in see_also.items() %}
+        <li><a href="{{href}}">{{text}}</a></li>
+        {% endfor %}
+        </ul>
+        </form>
+
+      </section>
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25485551-11', 'nigelsmall.com');
+  ga('send', 'pageview');
+
+</script>
+
 </body>
 </html>

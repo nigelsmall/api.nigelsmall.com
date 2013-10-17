@@ -2,26 +2,52 @@
 <html>
 <head>
     {% block head %}
-    <link rel="stylesheet" href="style.css" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="http://nigelsmall.com/css/terminal.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="http://nigelsmall.com/css/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="http://nigelsmall.com/css/print.css" media="print" />
     <title>{% block title %}{% endblock %} - Nigel's Web Services</title>
     {% endblock %}
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-25485551-11', 'nigelsmall.com');
-      ga('send', 'pageview');
-
-    </script>
 </head>
 <body>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">
+
+        {% block header %}
+        <header>
+          <div class="container">
+            <h1><a href="/">Nigel Small</a></h1>
+            <h2>Open Sorcery</h2>
+            <div class="contact">
+              <a href="https://github.com/nigelsmall"><img src="http://nigelsmall.com/img/github_mark.png"></a>
+              <a href="https://twitter.com/technige"><img src="http://nigelsmall.com/img/twitter_mark.png"></a>
+            </div>
+          </div>
+        </header>
+        {% endblock %}
+
+    
+    <div class="container">
+      <section id="main_content">
+{% block content %}{% endblock %}
+      </section>
+    </div>
+
+    <div id="footer" class="container">
         {% block footer %}
-        &copy; Copyright 2013 by <a href="http://domain.invalid/">Nigel Small</a>.
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-25485551-11', 'nigelsmall.com');
+          ga('send', 'pageview');
+
+        </script>
         {% endblock %}
     </div>
+
 </body>
 </html>
